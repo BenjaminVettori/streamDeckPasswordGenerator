@@ -22,7 +22,7 @@
   "Description": "Generate a new password", 
   "Name": "Password Generator", 
   "Icon": "resources/images/pluginIcon", 
-  "URL": "https://webzeug.net/StreamDeckPasswordGenerator", 
+  "URL": "https://github.com/hoermannklaus/streamDeckPasswordGenerator",
   "Version": "1.0",
   "OS": [
     {
