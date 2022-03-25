@@ -23,7 +23,7 @@
   "Name": "Password Generator", 
   "Icon": "resources/images/pluginIcon", 
   "URL": "https://github.com/hoermannklaus/streamDeckPasswordGenerator",
-  "Version": "1.0",
+  "Version": "1.0.0",
   "OS": [
     {
         "Platform": "mac", 
