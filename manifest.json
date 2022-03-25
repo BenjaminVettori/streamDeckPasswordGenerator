@@ -1,0 +1,41 @@
+{
+  "Actions": [
+    {
+      "Icon": "resources/images/actionIcon",
+      "Name": "Password Generator", 
+      "States": [
+        {
+          "Image": "resources/images/actionDefaultImage",
+          "TitleAlignment": "middle", 
+          "FontSize": "16"
+        }
+      ], 
+      "SupportedInMultiActions": false,
+      "Tooltip": "Generate a new password", 
+      "UUID": "org.webzeug.passwordgenerator.action"
+    }
+  ], 
+  "SDKVersion": 2,
+  "Author": "Klaus Hörmann-Engl",
+  "Category": "Webzeug",
+  "CodePath": "code.html", 
+  "Description": "Generate a new password", 
+  "Name": "Password Generator", 
+  "Icon": "resources/images/pluginIcon", 
+  "URL": "https://webzeug.net/StreamDeckPasswordGenerator", 
+  "Version": "1.0",
+  "OS": [
+    {
+        "Platform": "mac", 
+        "MinimumVersion" : "10.11"
+    },
+    {
+        "Platform": "windows", 
+        "MinimumVersion" : "10"
+    }
+  ],
+  "Software": 
+    {
+        "MinimumVersion" : "4.1"
+    }
+}

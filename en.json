@@ -1,0 +1,8 @@
+{
+  "Description": "Generate a new password.", 
+  "Name": "Password Generator", 
+  "com.elgato.counter.action": {
+    "Name": "Password Generator", 
+    "Tooltip": "Generate a new password."
+  }
+}

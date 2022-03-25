@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>org.webzeug.passwordGenerator</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <script>
+        
+        var websocket = null;
+        var pluginUUID = null;
+        var DestinationEnum = Object.freeze({"HARDWARE_AND_SOFTWARE":0, "HARDWARE_ONLY":1, "SOFTWARE_ONLY":2})
+        var timer;
+        var counterAction =
+        {
+            type : "com.elgato.counter.action",
+            
+            // When a user presses a key
+            onKeyDown : function(context, settings, coordinates, userDesiredState)
+            {
+                // Create a randowm password using these chars
+                var chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                var passwordLength = 12;
+                var password = "";
+                for (var i = 0; i <= passwordLength; i++) {
+                    var randomNumber = Math.floor(Math.random() * chars.length);
+                    password += chars.substring(randomNumber, randomNumber +1);
+                }
+
+                // Create document element, in order to copy the value to the clipboard
+                const el = document.createElement('textarea');
+                el.value = password;
+                el.style.position = 'absolute';
+                el.style.left = '-9999px';
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy')
+                document.body.removeChild(el);
+
+            }
+        };
+        
+        // Register plugin procedure
+        function connectElgatoStreamDeckSocket(inPort, inPluginUUID, inRegisterEvent, inInfo)
+        {
+            pluginUUID = inPluginUUID
+            
+            // Open the web socket
+            websocket = new WebSocket("ws://127.0.0.1:" + inPort);
+            
+            // When the websocket is oben, register with JSON data
+            websocket.onopen = function()
+            {
+                // WebSocket is connected, send message
+                var json = {
+                    "event": inRegisterEvent,
+                    "uuid": inPluginUUID
+                };
+                websocket.send(JSON.stringify(json));
+            };
+
+            // Receive events
+            websocket.onmessage = function (evt)
+            { 
+                // Received message from Stream Deck
+                var jsonObj = JSON.parse(evt.data);
+                var event = jsonObj['event'];
+                var action = jsonObj['action'];
+                var context = jsonObj['context'];
+                
+                // When the user presses a key
+                if(event == "keyDown")
+                {
+                    var jsonPayload = jsonObj['payload'];
+                    var settings = jsonPayload['settings'];
+                    var coordinates = jsonPayload['coordinates'];
+                    var userDesiredState = jsonPayload['userDesiredState'];
+                    counterAction.onKeyDown(context, settings, coordinates, userDesiredState);
+                }
+                // When the user releases a key
+                else if(event == "keyUp")
+                {
+                    var jsonPayload = jsonObj['payload'];
+                    var settings = jsonPayload['settings'];
+                    var coordinates = jsonPayload['coordinates'];
+                    var userDesiredState = jsonPayload['userDesiredState'];
+                    counterAction.onKeyUp(context, settings, coordinates, userDesiredState);
+                }
+                // When an instance of an action is displayed on Stream Deck
+                else if(event == "willAppear")
+                {
+                    var jsonPayload = jsonObj['payload'];
+                    var settings = jsonPayload['settings'];
+                    var coordinates = jsonPayload['coordinates'];
+                    counterAction.onWillAppear(context, settings, coordinates);
+                }
+            };
+
+            // Websocket is closed
+            websocket.onclose = function()
+            { 
+            };
+        };
+    </script>
+</body>
+</html>
