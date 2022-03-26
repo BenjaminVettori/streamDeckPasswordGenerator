@@ -4,7 +4,9 @@ This plugin for Elgatos **Stream Deck** is used to generate a new password with 
 
 > Isn't that awesome!
 
-There are currently two settings available:
+The plugin provides following settings:
 
-**Password length**: The length of the generated password (number >= 1).
-**Password characters**: The set of characters used to generate the password.
+| setting                 | description                                           |
+| ----------------------- | ----------------------------------------------------- |
+| **Password length**     | The length of the generated password (number >= 1).   |  
+| **Password characters** | The set of characters used to generate the password.  |
