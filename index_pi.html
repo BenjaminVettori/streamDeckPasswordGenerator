@@ -104,13 +104,19 @@
                 var context = jsonObj['context'];
                 if (event === 'didReceiveSettings') {
                     var jsonPayload = jsonObj['payload'];
-                    settings = jsonPayload['settings'];
+                    var currentSettings = jsonPayload['settings'];
+                    if(!currentSettings || !currentSettings.length) {
+                        // save settings initially if no settings exist
+                        saveSettings();
+                    } else {
+                        settings = currentSettings;
+                    }
                     document.getElementById('pwlength').value = settings.length;
                     document.getElementById('pwchars').value = settings.chars;
                     pwgAction.onSettingChanges(context, settings, coordinates);
                 }
             };
-
+            
             // Websocket is closed
             websocket.onclose = function()
             { 
